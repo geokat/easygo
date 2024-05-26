@@ -38,9 +38,46 @@ func main() {
 
 	s2 = append(s2, 4)
 	s2[0] = 0
-	// Prints -1 (s1 and s2 don't share underlying array anymore).
+	// Prints -1 (s1 and s2 don't share underlying array anymore)
 	fmt.Println(s1[0])
 }
 ```
 The last append (`s2 = append(s2, 4)`) takes `s2` over its capacity,
 so Go creates a new underlying array for it.
+
+### Slicing Direction Matters
+
+```Go
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	s1 := []int{0, 1, 2, 4}
+	// Prints 4
+	fmt.Println(cap(s1))
+
+	s2 := s1[:2]
+	// Prints 4
+	fmt.Println(cap(s2))
+
+	s2 = s2[:4]
+	// Prints 4 (re-slicing upwards within capacity works)
+	fmt.Println(s2[3])
+
+	s2 = s1[1:]
+	// Prints 3 (slicing off the bottom changes capacity)
+	fmt.Println(cap(s2))
+
+	s2 = s2[1:]
+	// Prints 2
+	fmt.Println(cap(s2))
+}
+```
+
+Slicing off the top of a slice doesn't change its capacity and we can
+re-slice back up to get the original length (and elements). However,
+slicing off the botom changes the capacity (i.e. there's no way to get
+the sliced off elements back).
