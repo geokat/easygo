@@ -104,8 +104,10 @@ func main() {
 
 	// Prints true
 	fmt.Println(myErr == nil)
+
 	// Prints false
 	fmt.Println(err == nil)
+
 	// Prints true
 	fmt.Println(err.(*MyError) == nil)
 }
