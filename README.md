@@ -12,7 +12,7 @@ better.
 
 ## Slices
 
-### Underlying Arrays Matter
+### Underlying arrays matter
 
 ```Go
 package main
@@ -45,7 +45,7 @@ func main() {
 The last append (`s2 = append(s2, 4)`) takes `s2` over its capacity,
 so Go creates a new underlying array for it.
 
-### Slicing Direction Matters
+### Slicing direction matters
 
 ```Go
 package main
@@ -81,3 +81,43 @@ Slicing off the top of a slice doesn't change its capacity and we can
 re-slice back up to get the original length (and elements). However,
 slicing off the botom changes the capacity (i.e. there's no way to get
 the sliced off elements back).
+
+## Interfaces
+
+### Nil inside an interface is not equal to nil
+
+```Go
+package main
+
+import "fmt"
+
+type MyError struct{}
+
+// Implements the error interface
+func (me *MyError) Error() string {
+	return "my error"
+}
+
+func main() {
+	var myErr *MyError
+	var err error = myErr
+
+	// Prints true
+	fmt.Println(myErr == nil)
+	// Prints false
+	fmt.Println(err == nil)
+	// Prints true
+	fmt.Println(err.(*MyError) == nil)
+}
+```
+
+[Explained](https://go.dev/doc/faq#nil_error) in the Go FAQ.
+
+Also [this post](https://groups.google.com/g/golang-nuts/c/wnH302gBa4I/m/zqcfBFPIBgAJ)
+by a Go developer provides more context:
+> ... we, probably incorrectly, chose to use the same identifier, `nil`, to
+> represent the zero value both for pointers and for interfaces.
+> ...
+> If we do change something in this area for Go 2, which we probably
+> won't, my preference would definitely be to introduce `nilinterface`
+> rather than to further confuse the meaning of `r != nil`.
