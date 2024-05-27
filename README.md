@@ -94,7 +94,7 @@ import "fmt"
 type MyError struct{}
 
 // Implements the error interface
-func (me *MyError) Error() string {
+func (me MyError) Error() string {
 	return "my error"
 }
 
@@ -113,7 +113,7 @@ func main() {
 
 [Explained](https://go.dev/doc/faq#nil_error) in the Go FAQ.
 
-Also [this post](https://groups.google.com/g/golang-nuts/c/wnH302gBa4I/m/zqcfBFPIBgAJ)
+Also, [this post](https://groups.google.com/g/golang-nuts/c/wnH302gBa4I/m/zqcfBFPIBgAJ)
 by a Go developer provides more context:
 > ... we, probably incorrectly, chose to use the same identifier, `nil`, to
 > represent the zero value both for pointers and for interfaces.
