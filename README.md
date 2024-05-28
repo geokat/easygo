@@ -123,3 +123,50 @@ by a Go developer provides more context:
 > If we do change something in this area for Go 2, which we probably
 > won't, my preference would definitely be to introduce `nilinterface`
 > rather than to further confuse the meaning of `r != nil`.
+
+## Assignability Rules
+
+### Numeric types are defined types
+
+```Go
+package main
+
+func main() {
+	type MyMap1 map[int]int
+	type MyMap2 map[int]int
+
+	var m1 MyMap1
+	var m2 MyMap2
+	var m map[int]int
+
+	// Works
+	m1 = m
+
+	// Causes compile-time error
+	m1 = m2
+
+	type MyInt int
+
+	var d1 MyInt
+	var d2 int
+
+	// Causes compile-time error
+	d1 = d2
+
+	// Avoid "declared but not used" errors
+	_, _ = m1, d1
+}
+```
+`m1 = m` works because it falls within the
+[assignability](https://go.dev/ref/spec#Assignability) rules. In this
+case, they both have identical underlying types and at least one of
+them (`m`) does not have a [named type](https://go.dev/ref/spec#Types).
+
+`m1 = m2` causes a compilation error despite their identical
+underlying types, because they both have defined types.
+
+Finally, `d1 = d2` causes an error because `int` is also a named
+type--predeclared types are considered named types according to
+the spec, which also mentions this:
+
+> To avoid portability issues all numeric types are defined types...
