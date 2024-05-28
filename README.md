@@ -162,11 +162,11 @@ func main() {
 case, they both have identical underlying types and at least one of
 them (`m`) does not have a [named type](https://go.dev/ref/spec#Types).
 
-`m1 = m2` causes a compilation error despite their identical
-underlying types, because they both have defined types.
+`m1 = m2` causes a compilation error despite the identical underlying
+types, because they both have defined types.
 
 Finally, `d1 = d2` causes an error because `int` is also a named
-type--predeclared types are considered named types according to
+type—predeclared types are considered named types according to
 the spec, which also mentions this:
 
 > To avoid portability issues all numeric types are defined types...
