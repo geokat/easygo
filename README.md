@@ -82,6 +82,36 @@ re-slice back up to get the original length (and elements). However,
 slicing off the botom changes the capacity (i.e. there's no way to get
 the sliced off elements back).
 
+## Arrays
+
+Arrays are rarely used explicitly in Go. Usually you just create a
+slice where other languages may use arrays. Go implicitly creates an
+underlying array and takes care of deallocating it once the slice
+stops using it.
+
+### Array's length is part of its type
+
+```Go
+package main
+
+func main() {
+	var a1 [2]int
+	var a2 [2]int
+	var a3 [3]int
+	// Works
+	a1 = a2
+	// Causes a compile-time error
+	a1 = a3
+
+	_ = a1
+}
+```
+
+`a1 = a3` does not fall within any of the
+[assignability](https://go.dev/ref/spec#Assignability) rules: `a1` and
+`a3` have different underlying types, since an arrays's length is part
+of its type.
+
 ## Interfaces
 
 ### Nil inside an interface is not equal to nil
