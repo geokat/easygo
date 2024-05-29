@@ -109,7 +109,7 @@ func main() {
 
 `a1 = a3` does not fall within any of the
 [assignability](https://go.dev/ref/spec#Assignability) rules: `a1` and
-`a3` have different underlying types, since an arrays's length is part
+`a3` have different underlying types, since an array's length is part
 of its type.
 
 ## Interfaces
