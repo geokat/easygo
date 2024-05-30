@@ -78,8 +78,8 @@ func main() {
 ```
 
 Slicing off the top of a slice doesn't change its capacity and we can
-re-slice back up to get the original length (and elements). However,
-slicing off the botom changes the capacity (i.e. there's no way to get
+re-slice back up to get the original length (and elements). Slicing
+off the bottom, however, changes the capacity (i.e. there's no way to get
 the sliced off elements back).
 
 ## Arrays
