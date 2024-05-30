@@ -112,6 +112,28 @@ func main() {
 `a3` have different underlying types, since an array's length is part
 of its type.
 
+### Arrays are value types
+
+```Go
+package main
+
+import "fmt"
+
+func main() {
+	a1 := [...]int{0, 1, 2, 3}
+
+	a2 := a1
+
+	a2[0] = 1
+
+	// Prints 0
+	fmt.Println(a1[0])
+}
+```
+
+Unlike slices, arrays are value types, which means that passing an array
+actually copies all of it, including the memory that holds the data.
+
 ## Interfaces
 
 ### Nil inside an interface is not equal to nil
