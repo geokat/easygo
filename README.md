@@ -222,3 +222,67 @@ type—predeclared types are considered named types according to
 the spec, which also mentions this:
 
 > To avoid portability issues all numeric types are defined types...
+
+## Defer and Recover
+
+### Defer statements can't change return parameters?
+
+```Go
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	// Prints foo
+	fmt.Println(testFunc())
+}
+
+func testFunc() string {
+	result := "foo"
+	defer func() {
+		result = "bar"
+	}()
+
+	return result
+}
+```
+
+According to the [spec](https://go.dev/ref/spec#Defer_statements):
+
+> ... if the surrounding function returns through an explicit return
+> statement, deferred functions are executed after any result
+> parameters are set by that return statement but before the function
+> returns to its caller
+
+However:
+
+> ... if the deferred function is a function literal and the
+> surrounding function has named result parameters that are in scope
+> within the literal, the deferred function may access and modify the
+> result parameters before they are returned
+
+Which means that the following code works as expected:
+
+```Go
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	// Prints bar
+	fmt.Println(testFunc())
+}
+
+func testFunc() (result string) {
+	result = "foo"
+	defer func() {
+		result = "bar"
+	}()
+
+	return result
+}
+```
