@@ -362,19 +362,20 @@ func main() {
 
 The output is:
 
-> worker 1 requesting lock (for read)
-> worker 1 acquired lock
-> worker 2 requesting lock (for write)
-> worker 3 requesting lock (for write)
-> worker 4 requesting lock (for read)
-> worker 1 released lock
-> worker 2 acquired lock
-> worker 2 released lock
-> worker 4 acquired lock
-> worker 4 released lock
-> worker 3 acquired lock
-> worker 3 released lock
-
+```
+worker 1 requesting lock (for read)
+worker 1 acquired lock
+worker 2 requesting lock (for write)
+worker 3 requesting lock (for write)
+worker 4 requesting lock (for read)
+worker 1 released lock
+worker 2 acquired lock
+worker 2 released lock
+worker 4 acquired lock
+worker 4 released lock
+worker 3 acquired lock
+worker 3 released lock
+```
 
 Indeed, the first blocked write lock request (in worker 2) results in
 all the following read requests getting blocked too, despite the fact
