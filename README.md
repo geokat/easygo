@@ -286,3 +286,105 @@ func testFunc() (result string) {
 	return result
 }
 ```
+
+## Package sync
+
+### Read-preferring or write-preferring mutex?
+
+With reader/writer mutexes, there are [two opposing
+priority](https://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock#Priority_policies)
+policies.  Which one does `sync.RWMutex` implement?
+
+According to the [doc](https://pkg.go.dev/sync#RWMutex):
+
+> If any goroutine calls Lock while the lock is already held by one or
+> more readers, concurrent calls to RLock will block until the writer
+> has acquired (and released) the lock, to ensure that the lock
+> eventually becomes available to the writer.
+
+However, at the time of this writing (go1.22), it doesn't appear to be
+the whole story. Consider the following example:
+
+```Go
+package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+const (
+	write = "write"
+	read  = "read"
+)
+
+var mtx sync.RWMutex
+var wg sync.WaitGroup
+
+func runWorker(num int, mode string) {
+	go func() {
+		// Order lock requests by their consecutive number.
+		time.Sleep(time.Duration(num*10) * time.Millisecond)
+
+		fmt.Printf("worker %d requesting lock (for %s)\n", num, mode)
+
+		if mode == write {
+			mtx.Lock()
+		} else {
+			mtx.RLock()
+		}
+
+		fmt.Printf("worker %d acquired lock\n", num)
+
+		time.Sleep(100 * time.Millisecond)
+
+		if mode == write {
+			mtx.Unlock()
+		} else {
+			mtx.RUnlock()
+		}
+
+		fmt.Printf("worker %d released lock\n", num)
+		wg.Done()
+	}()
+}
+
+func main() {
+	wg.Add(4)
+	runWorker(1, read)
+	runWorker(2, write)
+	runWorker(3, write)
+	runWorker(4, read)
+	wg.Wait()
+}
+```
+
+The output is:
+
+> worker 1 requesting lock (for read)
+> worker 1 acquired lock
+> worker 2 requesting lock (for write)
+> worker 3 requesting lock (for write)
+> worker 4 requesting lock (for read)
+> worker 1 released lock
+> worker 2 acquired lock
+> worker 2 released lock
+> worker 4 acquired lock
+> worker 4 released lock
+> worker 3 acquired lock
+> worker 3 released lock
+
+
+Indeed, the first blocked write lock request (in worker 2) results in
+all the following read requests getting blocked too, despite the fact
+that the mutex is locked for reading. And once the lock is released,
+the writer acquires it before the readers. This would appear to
+confirm that `sync.RWMutex` is write-preferring.
+
+However, when the writer is done with the mutex, the remaining blocked
+writer takes the back seat to the blocked reader (i.e. the reader gets
+to acquire the lock first).
+
+This suggests that `sync.RWMutex` is *write-preferring when locked for
+reading and read-preferring when locked for writing*.
