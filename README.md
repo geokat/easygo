@@ -378,10 +378,10 @@ worker 3 released lock
 ```
 
 Indeed, the first blocked write lock request (in worker 2) results in
-all the following read requests getting blocked too, despite the fact
-that the mutex is locked for reading. And once the lock is released,
-the writer acquires it before the readers. This would appear to
-confirm that `sync.RWMutex` is write-preferring.
+the following read request getting blocked too, despite the fact that
+the mutex is locked for reading. And once the lock is released, the
+writer acquires it before the reader. This would appear to confirm
+that `sync.RWMutex` is write-preferring.
 
 However, when the writer is done with the mutex, the remaining blocked
 writer takes the back seat to the blocked reader (i.e. the reader gets
