@@ -42,6 +42,9 @@ func main() {
 	fmt.Println(s1[0])
 }
 ```
+
+Run on [Go Playground](https://go.dev/play/p/3OQrnWUJ2Nk)
+
 The last append (`s2 = append(s2, 4)`) takes `s2` over its capacity,
 so Go creates a new underlying array for it.
 
