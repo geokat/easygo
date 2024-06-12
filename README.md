@@ -80,6 +80,9 @@ func main() {
 }
 ```
 
+[Go Playground link](https://go.dev/play/p/WKCjvUCIQb4)
+
+
 Slicing off the top of a slice doesn't change its capacity and we can
 re-slice back up to get the original length (and elements). Slicing
 off the bottom, however, changes the capacity (i.e. there's no way to get
