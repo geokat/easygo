@@ -139,6 +139,9 @@ func main() {
 }
 ```
 
+[Go Playground link](https://go.dev/play/p/5ZCIjKWPtnD)
+
+
 Unlike slices, arrays are value types, which means that passing an array
 actually copies all of it, including the memory that holds the data.
 
@@ -172,6 +175,8 @@ func main() {
 	fmt.Println(err.(*MyError) == nil)
 }
 ```
+
+[Go Playground link](https://go.dev/play/p/9GIRa8UxdzA)
 
 [Explained](https://go.dev/doc/faq#nil_error) in the Go FAQ.
 
