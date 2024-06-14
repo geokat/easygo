@@ -17,7 +17,7 @@ better.
   - [Slicing direction matters](#slicing-direction-matters)
 - [Arrays](#arrays)
   - [Array's length is part of its type](#arrays-length-is-part-of-its-type)
-  - [Arrays are value types](arrays-are-value-types)
+  - [Arrays are value types](#arrays-are-value-types)
 
 ## Slices
 
