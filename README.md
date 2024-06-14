@@ -18,6 +18,7 @@ better.
     <li><a href="#underlying-arrays-matter">Underlying arrays matter</a></li>
     <li><a href="#slicing-direction-matters">Slicing direction matters</a></li>
   </ul>
+  <li><a href="#arrays">Arrays</a></li>
   <ul>
     <li><a href="#arrays-length-is-part-of-its-type">Array's length is part of its type</a></li>
     <li><a href="#arrays-are-value-types">Arrays are value types</a></li>
