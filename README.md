@@ -307,6 +307,38 @@ func testFunc() (result string) {
 
 [Go Playground link](https://go.dev/play/p/NuJJ5O-ISny)
 
+### `recover()` won't save from panic in spawned goroutine
+
+```Go
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+func main() {
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("Caught:", err)
+		}
+	}()
+
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		// Won't be caught
+		panic("spawned goroutine panic")
+	}()
+
+	wg.Wait()
+}
+```
+[Go Playground link](https://go.dev/play/p/ffZv-NqHvJj)
+
+`recover()` has to be called on the panicking goroutine to stop the panicking.
+
 ## Package sync
 
 ### Read-preferring or write-preferring mutex?
