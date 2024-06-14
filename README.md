@@ -42,6 +42,7 @@ func main() {
 	fmt.Println(s1[0])
 }
 ```
+
 [Go Playground link](https://go.dev/play/p/3OQrnWUJ2Nk)
 
 The last append (`s2 = append(s2, 4)`) takes `s2` over its capacity,
