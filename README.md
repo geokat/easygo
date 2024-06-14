@@ -380,6 +380,8 @@ func main() {
 }
 ```
 
+[Go Playground link](https://go.dev/play/p/2wwHelKprZX)
+
 The output is:
 
 ```
