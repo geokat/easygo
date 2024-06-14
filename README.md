@@ -12,18 +12,12 @@ better.
 
 ## Table of Contents
 
-<ul>
-  <li><a href="#slices">Slices</a></li>
-  <ul>
-    <li><a href="#underlying-arrays-matter">Underlying arrays matter</a></li>
-    <li><a href="#slicing-direction-matters">Slicing direction matters</a></li>
-  </ul>
-  <li><a href="#arrays">Arrays</a></li>
-  <ul>
-    <li><a href="#arrays-length-is-part-of-its-type">Array's length is part of its type</a></li>
-    <li><a href="#arrays-are-value-types">Arrays are value types</a></li>
-  </ul>
-</ul>
+- [Slices](#slices)
+  - [Underlying arrays matter](#underlying-arrays-matter)
+  - [Slicing direction matters](#slicing-direction-matters)
+- [Arrays](#arrays)
+  - [Array's length is part of its type](#arrays-length-is-part-of-its-type)
+  - [Arrays are value types](arrays-are-value-types)
 
 ## Slices
 
