@@ -222,6 +222,9 @@ func main() {
 	_, _ = m1, d1
 }
 ```
+
+[Go Playground link](https://go.dev/play/p/DAJzL9o83cI)
+
 `m1 = m` works because it falls within the
 [assignability](https://go.dev/ref/spec#Assignability) rules. In this
 case, they both have identical underlying types and at least one of
@@ -262,6 +265,8 @@ func testFunc() string {
 }
 ```
 
+[Go Playground link](https://go.dev/play/p/bEsl6FVDuo3)
+
 According to the [spec](https://go.dev/ref/spec#Defer_statements):
 
 > ... if the surrounding function returns through an explicit return
@@ -299,6 +304,8 @@ func testFunc() (result string) {
 	return result
 }
 ```
+
+[Go Playground link](https://go.dev/play/p/NuJJ5O-ISny)
 
 ## Package sync
 
