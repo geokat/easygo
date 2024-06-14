@@ -15,11 +15,11 @@ better.
 <ul>
   <li><a href="#slices">Slices</a></li>
   <ul>
-    <li><a href="#underlying-arrays-matter">Underlying arrays matter</a></li
+    <li><a href="#underlying-arrays-matter">Underlying arrays matter</a></li>
     <li><a href="#slicing-direction-matters">Slicing direction matters</a></li>
   </ul>
   <ul>
-    <li><a href="#arrays-length-is-part-of-its-type">Array's length is part of its type</a></li
+    <li><a href="#arrays-length-is-part-of-its-type">Array's length is part of its type</a></li>
     <li><a href="#arrays-are-value-types">Arrays are value types</a></li>
   </ul>
 </ul>
