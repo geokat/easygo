@@ -10,6 +10,15 @@ your head. The following is an attempt to catalog such bits of Go,
 along with an attempt to explain them, so that I can understand them
 better.
 
+## Table of Contents
+
+- [Slices](#slices)
+ - [Underlying arrays matter](#underlying-arrays-matter)
+ - [Slicing direction matters](#slicing-direction-matters)
+- [Arrays](#arrays)
+ - [Array's length is part of its type](#arrays-length-is-part-of-its-type)
+ - [Arrays are value types](arrays-are-value-types)
+
 ## Slices
 
 ### Underlying arrays matter
