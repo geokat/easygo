@@ -337,7 +337,9 @@ func main() {
 ```
 [Go Playground link](https://go.dev/play/p/ffZv-NqHvJj)
 
-`recover()` has to be called on the panicking goroutine to stop the panicking.
+`recover()` has to be called on the panicking goroutine in order to
+stop the panicking. This one can be easy to miss, but it follows
+directly from the [spec](https://go.dev/ref/spec#Handling_panics).
 
 ## Package sync
 
