@@ -18,6 +18,13 @@ better.
 - [Arrays](#arrays)
   - [Array's length is part of its type](#arrays-length-is-part-of-its-type)
   - [Arrays are value types](#arrays-are-value-types)
+- [Interfaces](#interfaces)
+  - [Nil inside an interface is not equal to nil](#nil-inside-an-interface-is-not-equal-to-nil)
+- [Assignability Rules](#assignability-rules)
+  - [Numeric types are defined types](#numeric-types-are-defined-types)
+- [Defer and Recover](#defer-and-recover)
+  - [Defer statements can't change return parameters](#defer-statements-cant-change-return-parameters)
+  - [`recover()` won't save from panic in spawned goroutine](#recover-wont-save-from-panic-in-spawned-goroutine)
 
 ## Slices
 
