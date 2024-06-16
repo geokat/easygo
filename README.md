@@ -25,7 +25,7 @@ better.
 - [Defer and Recover](#defer-and-recover)
   - [Defer statements can't change return parameters?](#defer-statements-cant-change-return-parameters)
   - [`recover()` won't save from panic in spawned goroutine](#recover-wont-save-from-panic-in-spawned-goroutine)
-- [Packace sync](#package-sync)
+- [Package sync](#package-sync)
   - [Read-preferring or write-preferring mutex?](#read-preferring-or-write-preferring-mutex)
 
 ## Slices
