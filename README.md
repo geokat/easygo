@@ -18,7 +18,7 @@ better.
 - [Arrays](#arrays)
   - [Array's length is part of its type](#arrays-length-is-part-of-its-type)
   - [Arrays are value types](#arrays-are-value-types)
-- [`strings`](#strings)
+- [strings](#strings)
   - [Splitting empty string does not return empty slice](#splitting-empty-string-does-not-return-empty-slice)
 - [Interfaces](#interfaces)
   - [Nil inside an interface is not equal to nil](#nil-inside-an-interface-is-not-equal-to-nil)
