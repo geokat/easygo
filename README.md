@@ -18,6 +18,8 @@ better.
 - [Arrays](#arrays)
   - [Array's length is part of its type](#arrays-length-is-part-of-its-type)
   - [Arrays are value types](#arrays-are-value-types)
+- [`strings`](#strings)
+  - [Splitting empty string does not return empty slice](#splitting-empty-string-does-not-return-empty-slice)
 - [Interfaces](#interfaces)
   - [Nil inside an interface is not equal to nil](#nil-inside-an-interface-is-not-equal-to-nil)
 - [Assignability Rules](#assignability-rules)
@@ -162,6 +164,34 @@ func main() {
 
 Unlike slices, arrays are value types, which means that passing an array
 actually copies all of it, including the memory that holds the data.
+
+## Strings
+
+### Splitting empty string does not return empty slice
+
+```Go
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+func main() {
+	var s string
+
+	pp := strings.Split(s, ",")
+	// Prints 1 true
+	fmt.Println(len(pp), pp[0] == "")
+}
+```
+
+[Go Playground link](https://go.dev/play/p/usMUSt_d8we)
+
+This one follows from the `strings.Split()` [documentation](https://pkg.go.dev/strings#Split):
+
+> If s does not contain sep and sep is not empty, Split returns a
+> slice of length 1 whose only element is s.
 
 ## Interfaces
 
