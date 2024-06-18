@@ -29,6 +29,9 @@ better.
   - [`recover()` won't save from panic in spawned goroutine](#recover-wont-save-from-panic-in-spawned-goroutine)
 - [Package sync](#package-sync)
   - [Read-preferring or write-preferring mutex?](#read-preferring-or-write-preferring-mutex)
+- [Channels](#channels)
+  - [Closed channels can be read from](#closed-channels-can-be-read-from)
+
 
 ## Slices
 
@@ -493,3 +496,17 @@ to acquire the lock first).
 
 This suggests that `sync.RWMutex` is *write-preferring when locked for
 reading and read-preferring when locked for writing*.
+
+## Channels
+
+### Closed channels can be read from
+
+Closed channels can be read from even when empty. Reading from such a
+channel will succeed immediately, returning the zero value of the
+underlying type. Detecting this involves checking the additional boolean
+result which is set to `false` if the channel is closed and empty.
+
+We can also prevent unnecessary work by setting the channel to `nil`
+as soon as we detect that it's closed (and empty). Since communication
+on `nil` channels can never proceed, the `select` will skip the
+channel in the future iterations of the loop.
