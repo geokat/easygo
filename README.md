@@ -559,3 +559,65 @@ prevent unnecessary work by setting the channel to `nil` as soon as we
 detect that it's closed (and empty). Since communication on `nil`
 channels can never proceed, the `select` will skip the channel in the
 future iterations of the loop.
+
+```Go
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	// Generate a series of ints
+	cInts := make(chan int)
+	go func() {
+		for i := 0; i < 3; i++ {
+			cInts <- i
+			time.Sleep(time.Second)
+		}
+		close(cInts)
+	}()
+
+	// Generate a series of floats
+	cFloats := make(chan float32)
+	go func() {
+		for i := 0; i < 5; i++ {
+			cFloats <- float32(i)
+			time.Sleep(time.Second)
+		}
+		close(cFloats)
+	}()
+
+	intsDone := false
+	floatsDone := false
+	for {
+		select {
+
+		case d, ok := <-cInts:
+			if ok {
+				fmt.Println(d)
+			} else {
+				cInts = nil
+				intsDone = true
+			}
+
+		case f, ok := <-cFloats:
+			if ok {
+				fmt.Printf("%f\n", f)
+			} else {
+				cFloats = nil
+				floatsDone = true
+			}
+
+		default:
+			if intsDone && floatsDone {
+				return
+			}
+
+		}
+	}
+}
+```
+
+[Go Playground link](https://go.dev/play/p/54OQ-45nsEV)
