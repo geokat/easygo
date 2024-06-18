@@ -516,7 +516,7 @@ import (
 
 func main() {
 	// Generate a series of ints
-	cInts := make(chan int, 3)
+	cInts := make(chan int)
 	go func() {
 		for i := 0; i < 3; i++ {
 			cInts <- i
@@ -527,7 +527,7 @@ func main() {
 	}()
 
 	// Generate a series of floats
-	cFloats := make(chan float32, 5)
+	cFloats := make(chan float32)
 	go func() {
 		for i := 0; i < 5; i++ {
 			cFloats <- float32(i)
@@ -551,7 +551,7 @@ func main() {
 }
 ```
 
-[Go Playground link](https://go.dev/play/p/dZwfD5dvx4p)
+[Go Playground link](https://go.dev/play/p/fCNnopJJqW9)
 
 Detecting this involves checking the additional boolean result which
 is set to `false` if the channel is closed and empty. We can also
