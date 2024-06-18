@@ -503,10 +503,59 @@ reading and read-preferring when locked for writing*.
 
 Closed channels can be read from even when empty. Reading from such a
 channel will succeed immediately, returning the zero value of the
-underlying type. Detecting this involves checking the additional boolean
-result which is set to `false` if the channel is closed and empty.
+underlying type.
 
-We can also prevent unnecessary work by setting the channel to `nil`
-as soon as we detect that it's closed (and empty). Since communication
-on `nil` channels can never proceed, the `select` will skip the
-channel in the future iterations of the loop.
+
+```Go
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	// Generate a series of ints
+	cInts := make(chan int, 3)
+	go func() {
+		for i := 0; i < 3; i++ {
+			cInts <- i
+			time.Sleep(time.Second)
+		}
+		// Will cause the reader in the select to be spammed with zeroes
+		close(cInts)
+	}()
+
+	// Generate a series of floats
+	cFloats := make(chan float32, 5)
+	go func() {
+		for i := 0; i < 5; i++ {
+			cFloats <- float32(i)
+			time.Sleep(time.Second)
+		}
+		// Same problem as `close(cInts)`
+		close(cFloats)
+	}()
+
+	for {
+		select {
+
+		case d := <-cInts:
+			fmt.Println(d)
+
+		case f := <-cFloats:
+			fmt.Printf("%f\n", f)
+
+		}
+	}
+}
+```
+
+[Go Playground link](https://go.dev/play/p/dZwfD5dvx4p)
+
+Detecting this involves checking the additional boolean result which
+is set to `false` if the channel is closed and empty. We can also
+prevent unnecessary work by setting the channel to `nil` as soon as we
+detect that it's closed (and empty). Since communication on `nil`
+channels can never proceed, the `select` will skip the channel in the
+future iterations of the loop.
