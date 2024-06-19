@@ -503,7 +503,7 @@ reading and read-preferring when locked for writing*.
 
 Closed channels can be read from even when empty. Reading from such a
 channel will succeed immediately, returning the zero value of the
-underlying type.
+underlying type:
 
 
 ```Go
