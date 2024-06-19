@@ -589,8 +589,6 @@ func main() {
 		close(cFloats)
 	}()
 
-	intsDone := false
-	floatsDone := false
 	for {
 		select {
 
@@ -599,7 +597,6 @@ func main() {
 				fmt.Println(d)
 			} else {
 				cInts = nil
-				intsDone = true
 			}
 
 		case f, ok := <-cFloats:
@@ -607,17 +604,15 @@ func main() {
 				fmt.Printf("%f\n", f)
 			} else {
 				cFloats = nil
-				floatsDone = true
 			}
 
 		default:
-			if intsDone && floatsDone {
+			if cInts == nil && cFloats == nil {
 				return
 			}
-
 		}
 	}
 }
 ```
 
-[Go Playground link](https://go.dev/play/p/54OQ-45nsEV)
+[Go Playground link](https://go.dev/play/p/fITZ3I_SAu3)
