@@ -31,7 +31,8 @@ better.
   - [Read-preferring or write-preferring mutex?](#read-preferring-or-write-preferring-mutex)
 - [Channels](#channels)
   - [Closed channels can be read from](#closed-channels-can-be-read-from)
-
+- [Tips and Tricks](#tips-and-tricks)
+  - [Empty structs are useful](#empty-structs-are-useful)
 
 ## Slices
 
@@ -616,3 +617,16 @@ func main() {
 ```
 
 [Go Playground link](https://go.dev/play/p/fITZ3I_SAu3)
+
+
+## Tips and Tricks
+
+### Empty structs are useful
+
+Empty struct values (`struct{}{}`) don't take any memory space and are
+useful when presence of a value is needed but the actual value doesn't
+matter.
+
+Dave Cheney's
+[article](https://dave.cheney.net/2014/03/25/the-empty-struct)
+explains 
