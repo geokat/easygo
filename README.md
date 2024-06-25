@@ -625,8 +625,37 @@ func main() {
 
 Empty struct values (`struct{}{}`) don't take any memory space and are
 useful when presence of a value is needed but the actual value doesn't
-matter.
+matter. For example, when implementing sets using maps:
+
+```Go
+package main
+
+import (
+	"fmt"
+	"unsafe"
+)
+
+func main() {
+	set := make(map[string]struct{})
+
+	set["foo"] = struct{}{}
+
+	if _, ok := set["foo"]; ok {
+		fmt.Println("foo exists")
+	}
+
+	if _, ok := set["bar"]; !ok {
+		fmt.Println("bar doesn't exist")
+	}
+
+	// Prints 0
+	fmt.Println(unsafe.Sizeof(set["foo"]))
+}
+```
+
+[Go Playground link](https://go.dev/play/p/0CpZheKmiFB)
+
 
 Dave Cheney's
-[article](https://dave.cheney.net/2014/03/25/the-empty-struct)
-explains 
+[article](https://dave.cheney.net/2014/03/25/the-empty-struct) gives
+more examples of empty struct usage.
